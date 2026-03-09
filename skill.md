@@ -11,74 +11,118 @@ Publish content to 13+ social media platforms with platform-optimized styles, op
 
 ### 1. Check Late MCP Configuration
 
-Read `~/.mcp.json` to verify Late MCP is configured with API key.
+Read `~/.mcp.json` to verify Late MCP is configured.
 
-**If Late MCP not configured**, guide user through complete setup:
+**If Late MCP not configured**, execute automatic setup:
 
-### Late API Setup (Complete in One Go)
+### Automatic Setup Flow
 
-Guide user to complete all steps together:
-
-**1. Register and Get API Key**
-- Visit https://getlate.dev and register (free tier: 20 posts/month)
-- Go to Settings → API Keys
-- Create API key (format: `sk_xxxxxxxxxxxxxxxx`)
-- Keep this key ready for configuration
-
-**2. Connect Social Media Accounts**
-- In Late Dashboard → Accounts → Connect Account
-- Connect desired platforms (13+ supported):
-  - **LinkedIn**: Direct OAuth
-  - **X/Twitter**: Direct OAuth
-  - **Instagram**: Switch to Professional/Creator account, authorize via Facebook
-  - **Threads**: Connect via Instagram account
-  - **Facebook, TikTok, YouTube, Pinterest, Reddit, Telegram, Discord, etc.**
-
-**3. Install uv (if not installed)**
+**Step 1: Install uv (if needed)**
 ```bash
+# Check if uv is installed
+uvx --version
+
+# If not found, install it
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Verify: `uvx --version`
+**Step 2: Interactive API Key Setup**
 
-**4. Configure ~/.mcp.json**
-Edit `~/.mcp.json`, add `late` entry with the API key from step 1:
+Ask user via AskUserQuestion tool:
 
-```json
-{
-  "mcpServers": {
-    "late": {
-      "command": "/home/node/.local/bin/uvx",
-      "args": ["--from", "late-sdk[mcp]", "late-mcp"],
-      "env": {
-        "LATE_API_KEY": "sk_your_api_key_here"
-      }
+```
+Question: "Do you have a Late API Key?"
+Options:
+- "Yes, I have one" → Ask for API Key input
+- "No, need to register" → Guide to registration
+```
+
+**If user needs to register:**
+1. Guide user to visit https://getlate.dev (free tier: 20 posts/month)
+2. Instruct: Settings → API Keys → Create API key
+3. Ask user to provide the key (format: `sk_xxxxxxxxxxxxxxxx`)
+
+**If user has key:**
+1. Request API Key input via AskUserQuestion
+2. Validate format starts with `sk_`
+
+**Step 3: Auto-Configure Files**
+
+Read and intelligently merge configurations:
+
+**For ~/.mcp.json:**
+```python
+# Read existing config
+config = read_json("~/.mcp.json") or {"mcpServers": {}}
+
+# Add late server
+config["mcpServers"]["late"] = {
+    "command": "/home/node/.local/bin/uvx",
+    "args": ["--from", "late-sdk[mcp]", "late-mcp"],
+    "env": {
+        "LATE_API_KEY": api_key_from_user
     }
-  }
 }
+
+# Write back
+write_json("~/.mcp.json", config)
 ```
 
-**5. Enable in ~/.claude/settings.local.json**
-Add `"late"` to `enabledMcpjsonServers`:
+**For ~/.claude/settings.local.json:**
+```python
+# Read existing settings
+settings = read_json("~/.claude/settings.local.json") or {}
 
-```json
-{
-  "enabledMcpjsonServers": ["email", "late"]
-}
+# Add "late" to enabledMcpjsonServers if not present
+if "enabledMcpjsonServers" not in settings:
+    settings["enabledMcpjsonServers"] = []
+if "late" not in settings["enabledMcpjsonServers"]:
+    settings["enabledMcpjsonServers"].append("late")
+
+# Write back
+write_json("~/.claude/settings.local.json", settings)
 ```
 
-**6. Start New Conversation**
-Start a new conversation in HappyCapy for MCP tools to load.
+**Step 4: Restart Prompt**
 
-### 2. Verify Connected Platforms
+Display message:
+```
+✅ Late MCP configured successfully!
 
-Use Late MCP to list connected accounts:
+Please start a new conversation for the configuration to take effect.
+
+After starting new conversation, I will verify the setup and guide you to connect social media accounts.
+```
+
+### 2. Verify Setup and Connected Platforms
+
+**In the new conversation, verify configuration:**
 
 ```
 Call mcp__late__accounts_list
 ```
 
-This returns list of connected platforms with profile IDs. If no accounts found, guide user to connect platforms at https://getlate.dev/accounts.
+**Handle results:**
+
+- **Success with accounts**: Proceed to platform selection workflow
+- **Success but no accounts**: Guide user to connect platforms
+- **Error**: Display error message, suggest checking API key validity
+
+**If no accounts found:**
+```
+Your Late API is configured, but no social media accounts are connected yet.
+
+Please visit: https://getlate.dev/accounts
+
+Connect your desired platforms:
+- LinkedIn (Direct OAuth)
+- X/Twitter (Direct OAuth)
+- Instagram (Professional/Creator account via Facebook)
+- Threads (via Instagram)
+- Facebook, TikTok, YouTube, Pinterest, Reddit, Telegram, Discord, etc.
+
+After connecting accounts, call me again to start publishing!
+```
 
 ## Workflow
 
