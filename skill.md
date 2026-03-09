@@ -1,6 +1,6 @@
 ---
-name: cross-platform-publisher
-description: Publish content to Instagram, Twitter, LinkedIn, and Threads simultaneously with platform-optimized styles, optional AI-generated media (video/image), and smart error handling. Use when you need to cross-post to social media, create multi-platform marketing content, share announcements across platforms, publish with platform-specific adaptations, generate AI media for posts, or manage social media publishing workflows. Supports interactive content creation with user-guided platform selection, media generation choices, preview before publish, and automatic retry with character limit adjustments (especially for Threads 500-char limit).
+name: happycapy-social-publisher
+description: HappyCapy-specific skill for publishing content to Instagram, Twitter, LinkedIn, and Threads simultaneously with platform-optimized styles, optional AI-generated media (video/image), and smart error handling. Uses Late MCP integration available in HappyCapy environment. Use when you need to cross-post to social media, create multi-platform marketing content, share announcements across platforms, publish with platform-specific adaptations, generate AI media for posts, or manage social media publishing workflows. Supports interactive content creation with user-guided platform selection, media generation choices, preview before publish, and automatic retry with character limit adjustments (especially for Threads 500-char limit).
 ---
 
 # Cross-Platform Social Media Publisher
