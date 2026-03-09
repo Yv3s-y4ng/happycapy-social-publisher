@@ -13,32 +13,36 @@ Publish content to 13+ social media platforms with platform-optimized styles, op
 
 Read `~/.mcp.json` to verify Late MCP is configured with API key.
 
-**If Late MCP not configured**, guide user through setup:
+**If Late MCP not configured**, guide user through complete setup:
 
-#### Step 1: Get Late API Key
-1. Visit https://getlate.dev and register (free tier: 20 posts/month)
-2. Go to Settings → API Keys
-3. Create API key (format: `sk_xxxxxxxxxxxxxxxx`)
+### Late API Setup (Complete in One Go)
 
-#### Step 2: Connect Social Accounts
-Visit Late Dashboard → Accounts → Connect Account, authorize platforms:
-- **LinkedIn**: Direct OAuth
-- **X/Twitter**: Direct OAuth
-- **Instagram**: Switch to Professional/Creator account, authorize via Facebook
-- **Threads**: Connect via Instagram account
+Guide user to complete all steps together:
 
-#### Step 3: Install uv (if not installed)
+**1. Register and Get API Key**
+- Visit https://getlate.dev and register (free tier: 20 posts/month)
+- Go to Settings → API Keys
+- Create API key (format: `sk_xxxxxxxxxxxxxxxx`)
+- Keep this key ready for configuration
+
+**2. Connect Social Media Accounts**
+- In Late Dashboard → Accounts → Connect Account
+- Connect desired platforms (13+ supported):
+  - **LinkedIn**: Direct OAuth
+  - **X/Twitter**: Direct OAuth
+  - **Instagram**: Switch to Professional/Creator account, authorize via Facebook
+  - **Threads**: Connect via Instagram account
+  - **Facebook, TikTok, YouTube, Pinterest, Reddit, Telegram, Discord, etc.**
+
+**3. Install uv (if not installed)**
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Verify installation:
-```bash
-uvx --version
-```
+Verify: `uvx --version`
 
-#### Step 4: Configure ~/.mcp.json
-Edit `~/.mcp.json`, add `late` entry in `mcpServers`:
+**4. Configure ~/.mcp.json**
+Edit `~/.mcp.json`, add `late` entry with the API key from step 1:
 
 ```json
 {
@@ -54,7 +58,7 @@ Edit `~/.mcp.json`, add `late` entry in `mcpServers`:
 }
 ```
 
-#### Step 5: Enable in ~/.claude/settings.local.json
+**5. Enable in ~/.claude/settings.local.json**
 Add `"late"` to `enabledMcpjsonServers`:
 
 ```json
@@ -63,8 +67,8 @@ Add `"late"` to `enabledMcpjsonServers`:
 }
 ```
 
-#### Step 6: Start New Conversation
-After configuration, start a new conversation in HappyCapy for MCP tools to load.
+**6. Start New Conversation**
+Start a new conversation in HappyCapy for MCP tools to load.
 
 ### 2. Verify Connected Platforms
 
