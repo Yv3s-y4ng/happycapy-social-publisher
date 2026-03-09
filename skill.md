@@ -7,11 +7,16 @@ description: HappyCapy-specific skill for publishing content to 13+ social media
 
 Publish content to 13+ social media platforms with platform-optimized styles, optional AI-generated media, and smart error handling.
 
+**Environment Note**: This skill is designed for HappyCapy environment with fixed paths:
+- MCP config: `/home/node/.mcp.json`
+- Claude settings: `/home/node/.claude/settings.local.json`
+- User home: `/home/node`
+
 ## Prerequisites Check
 
 ### 1. Check Late MCP Configuration
 
-Read `~/.mcp.json` to verify Late MCP is configured.
+Read `/home/node/.mcp.json` to verify Late MCP is configured.
 
 **If Late MCP not configured**, execute automatic setup:
 
@@ -50,10 +55,10 @@ Options:
 
 Read and intelligently merge configurations:
 
-**For ~/.mcp.json:**
+**For /home/node/.mcp.json:**
 ```python
 # Read existing config
-config = read_json("~/.mcp.json") or {"mcpServers": {}}
+config = read_json("/home/node/.mcp.json") or {"mcpServers": {}}
 
 # Add late server
 config["mcpServers"]["late"] = {
@@ -65,13 +70,13 @@ config["mcpServers"]["late"] = {
 }
 
 # Write back
-write_json("~/.mcp.json", config)
+write_json("/home/node/.mcp.json", config)
 ```
 
-**For ~/.claude/settings.local.json:**
+**For /home/node/.claude/settings.local.json:**
 ```python
 # Read existing settings
-settings = read_json("~/.claude/settings.local.json") or {}
+settings = read_json("/home/node/.claude/settings.local.json") or {}
 
 # Add "late" to enabledMcpjsonServers if not present
 if "enabledMcpjsonServers" not in settings:
@@ -80,7 +85,7 @@ if "late" not in settings["enabledMcpjsonServers"]:
     settings["enabledMcpjsonServers"].append("late")
 
 # Write back
-write_json("~/.claude/settings.local.json", settings)
+write_json("/home/node/.claude/settings.local.json", settings)
 ```
 
 **Step 4: Restart Prompt**
