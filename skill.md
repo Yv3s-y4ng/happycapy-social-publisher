@@ -63,8 +63,8 @@ Add `"late"` to `enabledMcpjsonServers`:
 }
 ```
 
-#### Step 6: Restart HappyCapy Session
-After configuration, restart HappyCapy session for MCP tools to load.
+#### Step 6: Start New Conversation
+After configuration, start a new conversation in HappyCapy for MCP tools to load.
 
 ### 2. Verify Connected Platforms
 
@@ -424,7 +424,7 @@ HappyCapy = 30万+ AI能力，告别配置地狱 ☁️
 1. Verify `~/.mcp.json` configuration is correct
 2. Check API key format: `sk_xxxxxxxxxxxxxxxx`
 3. Verify `uvx` is installed: `uvx --version`
-4. Restart HappyCapy session
+4. Start a new conversation in HappyCapy
 5. Check `~/.claude/settings.local.json` has `"late"` in `enabledMcpjsonServers`
 
 ### No Connected Accounts
