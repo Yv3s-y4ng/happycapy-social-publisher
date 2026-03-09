@@ -8,6 +8,7 @@ description: HappyCapy-specific skill for publishing content to 13+ social media
 Publish content to 13+ social media platforms with platform-optimized styles, optional AI-generated media, and smart error handling.
 
 **Environment Note**: This skill is designed for HappyCapy environment with fixed paths:
+- Claude config: `/home/node/.claude.json`
 - MCP config: `/home/node/.mcp.json`
 - Claude settings: `/home/node/.claude/settings.local.json`
 - User home: `/home/node`
@@ -71,6 +72,24 @@ config["mcpServers"]["late"] = {
 
 # Write back
 write_json("/home/node/.mcp.json", config)
+```
+
+**For /home/node/.claude.json:**
+```python
+# Read existing config
+claude_config = read_json("/home/node/.claude.json") or {"mcpServers": {}}
+
+# Add late server (same as .mcp.json)
+claude_config["mcpServers"]["late"] = {
+    "command": "/home/node/.local/bin/uvx",
+    "args": ["--from", "late-sdk[mcp]", "late-mcp"],
+    "env": {
+        "LATE_API_KEY": api_key_from_user
+    }
+}
+
+# Write back
+write_json("/home/node/.claude.json", claude_config)
 ```
 
 **For /home/node/.claude/settings.local.json:**
