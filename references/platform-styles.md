@@ -4,7 +4,9 @@ Detailed guide for adapting content to each social media platform's unique style
 
 ## Overview
 
-When cross-posting content, each platform requires a different approach to maximize engagement. This guide provides specific strategies for Instagram, Twitter, LinkedIn, and Threads based on real-world experience.
+When cross-posting content, each platform requires a different approach to maximize engagement. Late API supports 13+ platforms including Instagram, Twitter/X, LinkedIn, Threads, Facebook, TikTok, YouTube, Pinterest, Reddit, Telegram, Discord, Mastodon, and more.
+
+This guide provides detailed strategies for the 4 most commonly used platforms (Instagram, Twitter, LinkedIn, and Threads) based on real-world experience. The principles and strategies outlined here—such as tone adaptation, character limit handling, hashtag strategies, and content structure—can be adapted to any platform supported by Late API.
 
 ## Instagram
 
